@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "framework": "vite",
+  "installCommand": "cd teampulse && npm install",
+  "buildCommand": "cd teampulse && npm run build --workspace client",
+  "outputDirectory": "teampulse/client/dist"
+}
