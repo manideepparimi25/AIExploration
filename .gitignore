@@ -1,0 +1,8 @@
+.commandcode/
+node_modules/
+**/node_modules/
+**/.env
+**/.env.*
+dist/
+build/
+.DS_Store

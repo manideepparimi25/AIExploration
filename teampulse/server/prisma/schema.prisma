@@ -1,0 +1,66 @@
+// Prisma schema for TeamPulse
+// Portable: works on SQLite (local dev) and PostgreSQL (production).
+// To switch to Postgres: set provider = "postgresql" here and set DATABASE_URL
+// to a postgresql:// connection string (e.g. Neon/Render).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         String   @default("MEMBER") // MEMBER | LEAD
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  tasksAssigned Task[]    @relation("TaskAssignee")
+  tasksCreated  Task[]    @relation("TaskCreator")
+  statuses      Status[]
+  comments      Comment[]
+}
+
+model Task {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String   @default("")
+  status      String   @default("TODO") // TODO | IN_PROGRESS | DONE
+  priority    String   @default("MEDIUM") // LOW | MEDIUM | HIGH
+  assigneeId  Int?
+  assignee    User?    @relation("TaskAssignee", fields: [assigneeId], references: [id], onDelete: SetNull)
+  createdById Int
+  createdBy   User     @relation("TaskCreator", fields: [createdById], references: [id])
+  comments    Comment[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Status {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workingOn String
+  blockers  String   @default("")
+  date      String   // ISO date YYYY-MM-DD; one status per user per day
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, date])
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  taskId    Int
+  task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  content   String
+  createdAt DateTime @default(now())
+}

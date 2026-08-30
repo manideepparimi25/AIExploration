@@ -1,0 +1,29 @@
+{
+  "name": "teampulse",
+  "private": true,
+  "description": "A lightweight team dashboard for tracking tasks and daily status.",
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "dev": "concurrently -n server,client -c yellow,cyan \"npm:dev:server\" \"npm:dev:client\"",
+    "dev:server": "npm --workspace server run dev",
+    "dev:client": "npm --workspace client run dev",
+    "build": "npm run build --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "prisma:generate": "npm --workspace server run prisma:generate",
+    "db:migrate": "npm --workspace server run db:migrate",
+    "db:push": "npm --workspace server run db:push",
+    "db:seed": "npm --workspace server run db:seed"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  },
+  "dependencies": {
+    "compose": "^0.1.2",
+    "docker": "^1.0.0",
+    "up": "^1.0.2"
+  }
+}
