@@ -1,8 +1,66 @@
 # TeamPulse
 
+## Project Name
+
+TeamPulse
+
+## Project Description
+
 A lightweight team dashboard for tracking tasks and daily status — built for small teams (5–20 people). Log in, manage tasks, and share daily status updates from one focused place.
 
 Built per `PLAN.md`.
+
+## Features
+
+- User authentication and role-based access
+- Task creation, assignment, updates, and comments
+- Daily status updates for team members
+- Team board showing each user’s latest status
+- Profile editing and password updates
+- Responsive dashboard for small team collaboration
+
+## Technology Used
+
+- **Frontend:** React 18, Vite, React Router, Tailwind CSS, Axios
+- **Backend:** Node.js + Express
+- **Database:** SQLite for local development, optional PostgreSQL for production
+- **ORM:** Prisma
+- **Authentication:** bcrypt + JWT
+- **Testing:** Vitest
+
+## How to Install
+
+From the `teampulse/` directory:
+
+```bash
+npm install
+cp server/.env.example server/.env
+cp client/.env.example client/.env
+```
+
+## How to Run Locally
+
+```bash
+# Create the database schema and generate Prisma client
+npm run db:push
+
+# Load demo data
+npm run db:seed
+
+# Start the frontend and backend together
+npm run dev
+```
+
+Open the app in your browser at http://localhost:5173
+
+## GitHub Repository
+
+https://github.com/manideepparimi25/AIExploration.git
+
+## Live Application URL
+
+- Local development app: http://localhost:5173
+- Production deployment: Not deployed yet
 
 ## Tech stack
 
